@@ -1,23 +1,104 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+// / / / / / / / / / / / / / / / / / / / / / //
+// / / / / / /   LIBRARIES   / / / / / / / / //
+// / / / / / / / / / / / / / / / / / / / / / //
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+// LIBRARIES FROM VSCODE API
+import {
+  ExtensionContext,
+  commands,
+  window,
+  StatusBarAlignment,
+  DocumentSelector,
+} from 'vscode';
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "versupack" is now active!');
+// LIBRARIES FROM VSCODE LANGUAGE
+import {
+  LanguageClient,
+} from "vscode-languageclient";
+
+
+
+// / / / / / / / / / / / / / / / / / / / / / / //
+// / / / / /  CONFIGURATIONS  / / / / / / / /  //
+// / / / / / / / / / / / / / / / / / / / / / / //
+
+// LSP Configurations
+let client: LanguageClient;
+
+
+
+// / / / / / / / / / / / / / / / / / / / / / / //
+// / / / / / / /    MAIN    / / / / / / / / /  //
+// / / / / / / / / / / / / / / / / / / / / / / //
+
+/**
+ * this method is called when your extension is activate.
+ * your extension is activated the very first time the command is executed.
+ * 
+ * @param context the current context of the extension.
+ */
+export function activate(context: ExtensionContext) {
+
+  /////////////////////////
+  // GENERAL CONFIGURATIONS
+  // Output Channel
+  var outputchannel = window.createOutputChannel("versupack");
+
+  // Status Bar
+  const statusBar = window.createStatusBarItem(StatusBarAlignment.Left, 0);
+  statusBar.text = 'Index Files';
+  statusBar.show();
+
+  // Indexer
+  const indexer = new 
+  
+
+  /////////////////////////
+  // CONTEXT UPDATES
+  // Status Bar
+  context.subscriptions.push(statusBar);
+
+  // Commands
+  context.subscriptions.push(commands.registerCommand('IndexCommand', IndexDocument));
+
+
+
+
+
+
+  /////////////////////////
+  // FUNCTION DECLARATION
+  function IndexDocument(): void {
+
+
+
+  }
+
+
+
+
+  // SELECTS DOCUMENT IN USE
+  const doc_select: DocumentSelector = [
+    {
+      scheme: 'file',
+      language: 'verilog'
+    },
+    {
+      scheme: 'file',
+      language: 'systemverilog'
+    }
+  ];
+
+
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
+	let disposable = commands.registerCommand('extension.helloWorld', () => {
 		// The code you place here will be executed every time your command is executed
 
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
+		window.showInformationMessage('Hello World!');
 	});
 
 	context.subscriptions.push(disposable);
